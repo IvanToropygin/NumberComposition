@@ -1,7 +1,8 @@
-package com.stepik.numbercomposition
+package com.stepik.numbercomposition.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.stepik.numbercomposition.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
