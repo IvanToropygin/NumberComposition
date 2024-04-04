@@ -10,5 +10,6 @@ interface GameRepository {
         maxSumValue: Int,
         countOfOptions: Int
     ): Question
+
     fun getGameSettings(level: Level): GameSettings
 }
