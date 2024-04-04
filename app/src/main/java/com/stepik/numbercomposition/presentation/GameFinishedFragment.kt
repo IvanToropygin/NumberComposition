@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.stepik.numbercomposition.R
 import com.stepik.numbercomposition.databinding.FragmentGameFinishedBinding
 import com.stepik.numbercomposition.domain.entity.GameResult
 
@@ -33,7 +34,44 @@ class GameFinishedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupClickListeners()
+        bindView()
+    }
 
+    private fun bindView() {
+        with(binding) {
+            emojiResult.setImageResource(getSmileId())
+
+            tvRequiredAnswers.text = String.format(
+                getString(R.string.required_score),
+                gameResult.gameSettings.minCountOfRightAnswers
+            )
+
+            tvRequiredPercentage.text = String.format(
+                getString(R.string.required_percentage),
+                gameResult.gameSettings.minPercentOfRightAnswers
+            )
+
+            tvScoreAnswers.text = String.format(
+                getString(R.string.score_answers),
+                gameResult.countOfRightAnswers
+            )
+
+            tvScorePercentage.text = String.format(
+                getString(R.string.score_percentage),
+                getPercentOfRightAnswers()
+            )
+        }
+    }
+
+    private fun getPercentOfRightAnswers() = with(gameResult) {
+        if (countOfQuestions == 0) 0 else countOfRightAnswers * 100 / countOfQuestions
+    }
+
+    private fun getSmileId() =
+        if (gameResult.winner) R.drawable.ic_smile else R.drawable.ic_sad
+
+    private fun setupClickListeners() {
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 retryGame()
@@ -67,8 +105,8 @@ class GameFinishedFragment : Fragment() {
     companion object {
 
         private const val KEY_RESULT = "result"
-        fun newInstance(gameResult: GameResult) = GameFinishedFragment()
-            .apply {
+        fun newInstance(gameResult: GameResult) =
+            GameFinishedFragment().apply {
                 arguments = Bundle().apply {
                     putParcelable(KEY_RESULT, gameResult)
                 }
