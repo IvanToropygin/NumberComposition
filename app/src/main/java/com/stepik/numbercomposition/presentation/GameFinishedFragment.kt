@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.stepik.numbercomposition.R
 import com.stepik.numbercomposition.databinding.FragmentGameFinishedBinding
 
 class GameFinishedFragment : Fragment() {
@@ -29,41 +28,8 @@ class GameFinishedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupClickListeners()
-        bindView()
+        binding.gameResult = args.gameResult
     }
-
-    private fun bindView() {
-        with(binding) {
-            emojiResult.setImageResource(getSmileId())
-
-            tvRequiredAnswers.text = String.format(
-                getString(R.string.required_score),
-                args.result.gameSettings.minCountOfRightAnswers
-            )
-
-            tvRequiredPercentage.text = String.format(
-                getString(R.string.required_percentage),
-                args.result.gameSettings.minPercentOfRightAnswers
-            )
-
-            tvScoreAnswers.text = String.format(
-                getString(R.string.score_answers),
-                args.result.countOfRightAnswers
-            )
-
-            tvScorePercentage.text = String.format(
-                getString(R.string.score_percentage),
-                getPercentOfRightAnswers()
-            )
-        }
-    }
-
-    private fun getPercentOfRightAnswers() = with(args.result) {
-        if (countOfQuestions == 0) 0 else countOfRightAnswers * 100 / countOfQuestions
-    }
-
-    private fun getSmileId() =
-        if (args.result.winner) R.drawable.ic_smile else R.drawable.ic_sad
 
     private fun setupClickListeners() {
         binding.buttonRetry.setOnClickListener {

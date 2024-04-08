@@ -18,6 +18,7 @@ class GameFragment : Fragment() {
 
     private val args by navArgs<GameFragmentArgs>()
 
+
     private val viewModelFactory by lazy {
         GameViewModelFactory(args.level, requireActivity().application)
     }
