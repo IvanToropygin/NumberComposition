@@ -42,7 +42,7 @@
         android:label="fragment_game_finished"
         tools:layout="@layout/fragment_game_finished" >
         <argument
-            android:name="result"
+            android:name="gameResult"
             app:argType="com.stepik.numbercomposition.domain.entity.GameResult" />
     </fragment>
 </navigation>
