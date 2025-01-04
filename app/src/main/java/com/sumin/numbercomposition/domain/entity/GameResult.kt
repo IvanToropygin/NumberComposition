@@ -1,8 +1,10 @@
 package com.sumin.numbercomposition.domain.entity
 
+import java.io.Serializable
+
 data class GameResult(
     val winner: Boolean,
     val countOfRightAnswers: Int,
     val countOfQuestions: Int,
-    val gameSettings: GameSettings
-)
+    val gameSettings: GameSettings,
+) : Serializable
