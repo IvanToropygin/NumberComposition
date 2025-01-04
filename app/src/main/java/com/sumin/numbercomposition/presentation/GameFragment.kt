@@ -25,7 +25,7 @@ class GameFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentGameBinding.inflate(inflater, container, false)
         return binding.root
@@ -43,7 +43,7 @@ class GameFragment : Fragment() {
     private fun lunchGameFinishedFragment(gameResult: GameResult) {
         parentFragmentManager.beginTransaction()
             .replace(R.id.main_container, GameFinishedFragment.newInstance(gameResult))
-            .addToBackStack(null)
+            .addToBackStack(NAME_FOR_NAVIGATION)
             .commit()
     }
 
@@ -51,10 +51,12 @@ class GameFragment : Fragment() {
 
         private const val LEVEL_KEY = "level_key"
 
-        fun newInstance(level : Level): GameFragment {
+        const val NAME_FOR_NAVIGATION = "game_fragment"
+
+        fun newInstance(level: Level): GameFragment {
             return GameFragment().apply {
                 arguments = Bundle().apply {
-                   putSerializable(LEVEL_KEY, level)
+                    putSerializable(LEVEL_KEY, level)
                 }
             }
         }

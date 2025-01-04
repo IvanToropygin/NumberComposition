@@ -17,7 +17,7 @@ class ChooseLevelFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentChooseLevelBinding.inflate(inflater, container, false)
         return binding.root
@@ -25,7 +25,7 @@ class ChooseLevelFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        with (binding) {
+        with(binding) {
             buttonLevelTest.setOnClickListener { launchGameFragment(Level.TEST) }
             buttonLevelEasy.setOnClickListener { launchGameFragment(Level.EASY) }
             buttonLevelNormal.setOnClickListener { launchGameFragment(Level.NORMAL) }
@@ -46,6 +46,9 @@ class ChooseLevelFragment : Fragment() {
     }
 
     companion object {
+
+        const val NAME_FOR_NAVIGATION = "choose_level_fragment"
+
         fun newInstance() = ChooseLevelFragment()
     }
 }
