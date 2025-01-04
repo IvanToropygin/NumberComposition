@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.sumin.numbercomposition.R
 import com.sumin.numbercomposition.databinding.FragmentGameBinding
 import com.sumin.numbercomposition.domain.entity.GameResult
+import com.sumin.numbercomposition.domain.entity.GameSettings
 import com.sumin.numbercomposition.domain.entity.Level
 
 class GameFragment : Fragment() {
@@ -31,13 +32,32 @@ class GameFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.tvOption1.setOnClickListener { lunchGameFinishedFragment(
+            GameResult(
+                winner = true,
+                countOfRightAnswers = 0,
+                countOfQuestions = 0,
+                gameSettings = GameSettings(
+                    maxSumValue = 0,
+                    minCountOfRightAnswers = 0,
+                    minPercentOfRightAnswers = 0,
+                    gameTimeInSeconds = 0
+                )
+            )
+        ) }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
     private fun parseArgs() {
-        level = requireArguments().getSerializable(LEVEL_KEY) as Level
+        requireArguments().getParcelable<Level>(LEVEL_KEY)?.let{
+            level = it
+        }
     }
 
     private fun lunchGameFinishedFragment(gameResult: GameResult) {
@@ -56,7 +76,7 @@ class GameFragment : Fragment() {
         fun newInstance(level: Level): GameFragment {
             return GameFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(LEVEL_KEY, level)
+                    putParcelable(LEVEL_KEY, level)
                 }
             }
         }
