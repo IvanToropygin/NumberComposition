@@ -129,7 +129,7 @@ class GameFragment : Fragment() {
     private fun launchGameFinishedFragment(gameResult: GameResult) {
         parentFragmentManager.beginTransaction()
             .replace(R.id.main_container, GameFinishedFragment.newInstance(gameResult))
-            .addToBackStack(NAME_FOR_NAVIGATION)
+            .addToBackStack(NAME_FOR_NAVIGATION_TO_GAME)
             .commit()
     }
 
@@ -137,7 +137,7 @@ class GameFragment : Fragment() {
 
         private const val LEVEL_KEY = "level_key"
 
-        const val NAME_FOR_NAVIGATION = "game_fragment"
+        const val NAME_FOR_NAVIGATION_TO_GAME = "game_fragment"
 
         fun newInstance(level: Level): GameFragment {
             return GameFragment().apply {
