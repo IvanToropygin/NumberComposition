@@ -72,7 +72,6 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
 
     fun chooseAnswer(option: Int) {
         checkAnswer(option)
-        updateProgress()
         generateQuestion()
         updateProgress()
     }
