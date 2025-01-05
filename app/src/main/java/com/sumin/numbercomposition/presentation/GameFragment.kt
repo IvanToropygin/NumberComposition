@@ -7,19 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.sumin.numbercomposition.R
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.sumin.numbercomposition.databinding.FragmentGameBinding
 import com.sumin.numbercomposition.domain.entity.GameResult
-import com.sumin.numbercomposition.domain.entity.Level
 
 class GameFragment : Fragment() {
 
-    private lateinit var level: Level
+    private val args by navArgs<GameFragmentArgs>()
+
     private val viewModelFactory by lazy {
-        GameViewModelFactory(level, requireActivity().application)
+//        val args = GameFragmentArgs.fromBundle(requireArguments())
+        GameViewModelFactory(args.level, requireActivity().application)
     }
     private val viewModel by lazy {
         ViewModelProvider(this, viewModelFactory)[GameViewModel::class.java]
@@ -41,11 +42,6 @@ class GameFragment : Fragment() {
     private var _binding: FragmentGameBinding? = null
     private val binding: FragmentGameBinding
         get() = _binding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        parseArgs()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -119,31 +115,11 @@ class GameFragment : Fragment() {
         return ContextCompat.getColor(requireContext(), colorResId)
     }
 
-    private fun parseArgs() {
-        requireArguments().getParcelable<Level>(LEVEL_KEY)?.let {
-            level = it
-        }
-    }
-
     private fun launchGameFinishedFragment(gameResult: GameResult) {
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.main_container, GameFinishedFragment.newInstance(gameResult))
-            .addToBackStack(NAME_FOR_NAVIGATION_TO_GAME)
-            .commit()
-    }
-
-    companion object {
-
-        private const val LEVEL_KEY = "level_key"
-
-        const val NAME_FOR_NAVIGATION_TO_GAME = "game_fragment"
-
-        fun newInstance(level: Level): GameFragment {
-            return GameFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable(LEVEL_KEY, level)
-                }
-            }
-        }
+        findNavController().navigate(
+            GameFragmentDirections.actionGameFragmentToGameFinishedFragment(
+                gameResult
+            )
+        )
     }
 }
